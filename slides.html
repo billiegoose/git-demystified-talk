@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git Demystified</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      
+      [role="tree"] {
+        margin-left: 10px;
+        padding-left: 0;
+      }
+      [role="tree"] [aria-expanded] > * {
+        padding-left: 1.5ch;
+      }
+      [role="tree"] [role="treeitem"][aria-expanded]::before {
+        content: "▶";
+        font-size: 60%;
+        display: inline-block;
+      }
+      [role="tree"] [role="treeitem"][aria-expanded="true"]::before {
+        transform: rotate(90deg);
+      }
+      [role="tree"] [aria-expanded="false"] [role="group"] {
+        display: none;
+      }
+      [role="tree"] [aria-expanded="true"]::marker {
+        transform: rotate(90deg);
+      }
+
+      [role="tree"] [role="treeitem"]::before {
+        content: "– ";
+      }
+
+      .strike {
+        text-decoration: line-through;
+      }
+      .hide {
+        display: none !important;
+      }
+
+      .dim {
+        color: gray;
+      }
+      .notdim {
+        color: black;
+      }
+      .new::after {
+        content: ' 🌟';
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+      table, th, td {
+        border: 1px solid black;
+      }
+      td, th {
+        padding: 0.5ch 1ch;
+      }
+      li {
+        margin-bottom: 1ch;
+      }
+
+      .footnote {
+        position: absolute;
+        bottom: 1ch;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        sourceUrl: 'slides.md',
+        navigation: {
+          scroll: false,
+        }
+      });
+      slideshow.on('afterShowSlide', function (slide) {
+        try {
+          var i = 1
+          const els = document.querySelectorAll('.graphviz.remark-code:not(.hide)');
+          for (const el of els) {
+            const text = el.innerText;
+            if (el.classList.contains('hide')) return;
+            const div = document.createElement('div');
+            div.id = `graph-${i++}`;
+            el.parentElement.append(div);
+            el.classList.add('hide');
+            window.d3.select(`#${div.id}`).graphviz().renderDot(text)
+          }
+        } catch {}
+      });
+    </script>
+
+    <script src="//d3js.org/d3.v5.min.js"></script>
+    <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+    <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+    <script>
+    </script>
+  </body>
+</html>
